@@ -8,6 +8,10 @@ function mkcd() {
 function rails_heft(){
   for file in $(find app/$1/**/*.rb -type f); do wc -l $file ; done  | sort -r | head
 }
+# devcloud
+alias p="cd /srv/posterous/www/current"
+alias ld="/srv/posterous/www/current/log"
+
 # misc personal
 alias cdev="cd ~/dev"
 alias coc="cd ~/dev/cocoa"
