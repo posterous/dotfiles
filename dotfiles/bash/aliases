@@ -11,13 +11,14 @@ function rails_heft(){
 # devcloud
 alias p="cd /srv/posterous/www/current"
 alias ld="/srv/posterous/www/current/log"
+alias v.="vim ."
+alias v="vim"
 
 # misc personal
 alias cdev="cd ~/dev"
 alias coc="cd ~/dev/cocoa"
 alias a="autospec "
 alias rq="QUEUE=* rake resque:work"
-alias p="cd /Volumes/Posterous/posterous"
 alias psc="cd ~/dev/posterous && sc"
 alias pts="cd ~/dev/posterous && ts"
 alias dev="cd ~/dev"
