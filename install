@@ -3,14 +3,15 @@
 require 'fileutils'
 include FileUtils
 
+puts `sudo apt-get install vim-nox`
+puts `curl https://github.com/carlhuda/janus/raw/master/bootstrap.sh -o - | sh`
+puts `curl https://gist.github.com/raw/966563/9004d4b1df713d2440c80ff302e2106a85b8290c/.vimrc.local > ~/.vimrc.local`
 puts `git clone git@github.com:posterous/dotfiles.git ~/bin`
 
 DOT_FILES = {
   'irbrc' 						=> '.irbrc', 
   'zshrc' 						=> '.zshrc', 
   'dotfiles/bashrc' 	=> '.bashrc', 
-  'dotfiles/vimrc' 		=> '.vimrc',
-  'dotfiles/gvimrc' 	=> '.gvimrc', 
   'dotfiles/autotest' => '.autotest'
 }
 
