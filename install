@@ -3,8 +3,9 @@
 require 'fileutils'
 include FileUtils
 
-puts `sudo apt-get install vim-nox`
-puts `curl https://raw.github.com/carlhuda/janus/master/bootstrap.sh -o - | sh`
+unless RUBY_PLATFORM.include? 'darwin'
+  puts `curl https://raw.github.com/carlhuda/janus/master/bootstrap.sh -o - | sh`
+end
 puts `curl https://raw.github.com/gist/966563/9004d4b1df713d2440c80ff302e2106a85b8290c/.vimrc.local > ~/.vimrc.local`
 puts `git clone git@github.com:posterous/dotfiles.git ~/bin`
 
@@ -19,7 +20,8 @@ DOT_FILES.map do |source, sym|
   file_path = "#{ENV['HOME']}/#{sym}"
   if File.exists? file_path
     puts "#{file_path} exits. Moving to #{file_path}.bk"
-    FileUtils.mv(file_path,"#{file_path}.bk",:force => true)
+    FileUtils.rm("#{file_path}", :force => true)
+    FileUtils.rm("#{file_path}.bk", :force => true)
   end
   FileUtils.ln_s("#{ENV['HOME']}/bin/#{source}", "#{ENV['HOME']}/#{sym}")
 end
