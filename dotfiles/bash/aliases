@@ -9,8 +9,7 @@ function rails_heft(){
   for file in $(find app/$1/**/*.rb -type f); do wc -l $file ; done  | sort -r | head
 }
 # devcloud
-alias p="cd /srv/posterous/www/current"
-alias ld="/srv/posterous/www/current/log"
+alias p="cd ~/dev/posterous"
 alias v.="vim ."
 alias v="vim"
 
