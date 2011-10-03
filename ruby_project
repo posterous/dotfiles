@@ -1,7 +1,11 @@
 #!/usr/bin/env ruby
 
+puts "Project Name:"
+
+@project_name = gets().chomp
+
 @dirs   = %w{lib spec}
-@files  = %w{README.mdown .gitignore spec/spec_helper.rb spec/spec.opts}
+@files  = %w{README.md .rspec Guardfile .gitignore spec/helper.rb}
 
 @dirs.each {|dir| `mkdir #{dir}` }
 @files.each{|file| `touch #{file}` }
@@ -10,30 +14,42 @@ GIT_IGNORE = <<-TEXT
 *.swp
 *.swo
 *.orig
+.DS_Store
 TEXT
 
 SPEC_OPTS = <<-TEXT
 --colour
---format nested
---loadby mtime
+--format progress
 TEXT
 
-SPEC_HELPER = <<-RUBY
+GUARDFILE = %q[
+guard 'rspec', :version => 2 do
+  watch(%r{^spec/.+_spec\.rb$})
+  watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
+  watch('spec/spec_helper.rb')  { "spec" }
 
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-
-require 'spec'
-require 'spec/autorun'
-Spec::Runner.configure do |config|
-  config.mock_with :mocha
+  watch(%r{^spec/.+_spec\.rb$})
+  watch(%r{^lib/(.+)\.rb$}) { |m| "spec/lib/#{m[1]}_spec.rb" }
+  watch(%r{^spec/support/(.+)\.rb$}) { "spec" }
+  watch('spec/helper.rb') { "spec" }
 end
+]
 
+SPEC_HELPER = <<-RUBY
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+RSpec.configure do |config|
+    
+end
 RUBY
 
+File.open('Guardfile','w') {|f| f.write GUARDFILE }
 File.open('.gitignore','w') {|f| f.write GIT_IGNORE }
-File.open('spec/spec.opts','w') {|f| f.write SPEC_OPTS }
-File.open('spec/spec.opts','w') {|f| f.write SPEC_OPTS }
-File.open('spec/spec_helper.rb','w') {|f| f.write SPEC_HELPER }
+File.open('.rspec','w') {|f| f.write SPEC_OPTS }
+File.open('spec/helper.rb','w') {|f| f.write SPEC_HELPER }
 
-puts "done"
+p `rvm --rvmrc 1.9.2@#{@project_name}`
+`cd .. && cd -`
+p `gem install rspec guard-rspec`
+
+puts "done."
