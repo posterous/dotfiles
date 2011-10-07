@@ -26,4 +26,6 @@ DOT_FILES.map do |source, sym|
   FileUtils.ln_s("#{ENV['HOME']}/bin/#{source}", "#{ENV['HOME']}/#{sym}")
 end
 
+`chsh -s /bin/zsh`
+
 puts `gem install --no-rdoc --no-ri map_by_method what_methods net-http-spy awesome_print looksee wirble sketches interactive_editor`
