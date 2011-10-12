@@ -4,8 +4,10 @@ require 'fileutils'
 include FileUtils
 
 unless RUBY_PLATFORM.include? 'darwin'
-  puts `curl https://raw.github.com/carlhuda/janus/master/bootstrap.sh -o - | sh`
+  puts `sudo apt-get install vim-nox`
 end
+
+puts `curl https://raw.github.com/carlhuda/janus/master/bootstrap.sh -o - | sh`
 puts `curl https://raw.github.com/gist/966563/9004d4b1df713d2440c80ff302e2106a85b8290c/.vimrc.local > ~/.vimrc.local`
 puts `git clone git@github.com:posterous/dotfiles.git ~/bin`
 
@@ -28,4 +30,6 @@ end
 
 `chsh -s /bin/zsh`
 
-puts `gem install --no-rdoc --no-ri map_by_method what_methods net-http-spy awesome_print looksee wirble sketches interactive_editor`
+unless RUBY_PLATFORM.include? 'darwin'
+  puts `gem install --no-rdoc --no-ri map_by_method what_methods net-http-spy awesome_print looksee wirble sketches interactive_editor`
+end
